@@ -11,7 +11,7 @@ function makeImageGallery(galleryItems) {
             <img
                 class="gallery__image"
                 src="${preview}"
-                data-source="large-image.jpg"
+                data-source="${original}"
                 alt="${description}"
             />
         </a>
@@ -31,26 +31,32 @@ gallery.addEventListener("click", onClick);
 
 function onClick(evt) {
   evt.preventDefault();
+
+  // console.log(evt.target.nodeName);
+
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-}
 
-const instance = basicLightbox.create(`
-     const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`, {
-    onShow: () => {
-      document.addEventListener("keydown", keyEsc);
-    },
-    onClose: () => {
-      document.removeEventListener("keydown", keyEsc);
-    },
-  });
+  const instance = basicLightbox.create(
+    `<img src="${evt.target.dataset.source}">`,
+    {
+      onShow: () => {
+        window.addEventListener("keydown", onKeyPress);
+      },
+      onClose: () => {
+        window.removeEventListener("keydown", onKeyPress);
+      },
+    }
+  );
 
-  const keyEsc = (event) => {
+  function onKeyPress(event) {
     if (event.key === "Escape") {
       instance.close();
     }
-  };
-`);
+  }
 
-instance.show();
+  instance.show();
+}
+
+console.log(galleryItems);
