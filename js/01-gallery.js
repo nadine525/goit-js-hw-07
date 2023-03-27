@@ -26,7 +26,7 @@ const images = makeImageGallery(galleryItems);
 gallery.insertAdjacentHTML("beforeend", images);
 console.log(makeImageGallery(galleryItems));
 
-//делегування на ul
+//прослуховування на ul
 gallery.addEventListener("click", onClick);
 
 function onClick(evt) {
